@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gestar com Direitos</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gestar">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#6A47C9">
+<meta name="description" content="Gestar com Direitos: reconheça a violência obstétrica e conheça seus direitos.">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap">
+<style>
+/* Layout: one phone-width scroll in short colored chapters: hero, what it is, red-flag flip cards, dangers, a yes/no quiz, law cards, help numbers, a mini birth plan. */
+:root{
+  --bg:#FBF8FF; --surface:#FFFFFF; --surface2:#F1ECFB; --line:#E5DDF3;
+  --fg:#2A1F45; --muted:#655B7C;
+  --violet:#6A47C9; --coral:#E0533F; --sun:#F5B82E; --teal:#1E8C7A; --pink:#E85A9B;
+  --on:#FFFFFF; --ink-on-sun:#2A1F45;
+  --font:"Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#16111F; --surface:#211A30; --surface2:#2C2340; --line:#3A2F52; --fg:#F4EFFC; --muted:#BDB2D2;
+  --violet:#A98BFF; --coral:#FF8A78; --sun:#FFCB55; --teal:#5FD4BE; --pink:#FF8DC0; --on:#1A1228; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16111F; --surface:#211A30; --surface2:#2C2340; --line:#3A2F52; --fg:#F4EFFC; --muted:#BDB2D2;
+  --violet:#A98BFF; --coral:#FF8A78; --sun:#FFCB55; --teal:#5FD4BE; --pink:#FF8DC0; --on:#1A1228; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16.5px;line-height:1.5;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 70px;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:34px;padding-top:16px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+a{color:var(--violet)}
+h2{font-weight:900;font-size:27px;line-height:1.12;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.kicker i{width:26px;height:26px;border-radius:9px;background:var(--c);color:var(--on);display:grid;place-items:center;font-style:normal;font-size:14px}
+.sec{display:flex;flex-direction:column;gap:14px}
+.sub{margin:0;color:var(--muted)}
+
+/* hero */
+.hero{position:relative;border-radius:30px;padding:26px 22px 24px;background:var(--violet);color:var(--on);overflow:hidden}
+.hero h1{margin:0;padding-right:40px;font-weight:900;font-size:clamp(34px,10vw,46px);line-height:1.02;letter-spacing:-.02em;position:relative;max-width:12ch}
+.hero p{margin:12px 0 0;font-weight:700;font-size:17px;position:relative;max-width:26ch;opacity:.95}
+.hero .blob{position:absolute;border-radius:50%}
+.hero .b1{width:180px;height:180px;right:-50px;top:-40px;background:var(--pink);opacity:.9}
+.hero .b2{width:110px;height:110px;right:40px;bottom:-40px;background:var(--sun)}
+.hero .b3{width:40px;height:40px;right:18px;bottom:78px;background:var(--teal)}
+.hero nav{position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.hero nav a{color:var(--on);text-decoration:none;font-weight:800;font-size:14px;border:2px solid currentColor;border-radius:99px;padding:6px 12px;min-height:40px;display:inline-flex;align-items:center}
+
+/* o que é */
+.what{background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.what p{margin:0;font-size:18px;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 12px;border-radius:99px;font-weight:800;font-size:14px;background:var(--c);color:var(--on)}
+.chip.soft{background:var(--surface2);color:var(--fg)}
+
+/* flip cards */
+.flips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.flip{display:block;width:100%;perspective:900px;border:0;background:transparent;padding:0;min-height:168px;text-align:left}
+.flip .in{display:block;position:relative;width:100%;height:100%;min-height:168px;transition:transform .45s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:8px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.front{background:var(--c);color:var(--on)}
+.front svg{width:34px;height:34px}
+.front b{font-weight:900;font-size:17px;line-height:1.15}
+.front small{margin-top:auto;font-weight:800;font-size:12px;opacity:.85}
+.back{background:var(--surface);border:2px solid var(--c);transform:rotateY(180deg);font-size:14px;line-height:1.4;font-weight:600;overflow:auto}
+.back b{color:var(--c);font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+@media (prefers-reduced-motion: reduce){.flip .in{transition:none}}
+.wide{grid-column:1/-1}
+.flip.wide,.flip.wide .in{min-height:168px}
+
+/* perigos */
+.dangers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.dg{background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.dg .ic{width:46px;height:46px;border-radius:15px;background:var(--c);color:var(--on);display:grid;place-items:center}
+.dg .ic svg{width:26px;height:26px}
+.dg b{font-weight:900;font-size:16px;line-height:1.2}
+.dg span{font-size:14px;color:var(--muted);font-weight:600;line-height:1.35}
+
+/* quiz */
+.quiz{background:var(--sun);color:var(--ink-on-sun);border-radius:26px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.quiz .q{font-weight:900;font-size:20px;line-height:1.25;min-height:3.75em}
+.quiz .prog{display:flex;gap:6px}
+.quiz .prog i{flex:1;height:7px;border-radius:9px;background:rgba(42,31,69,.18)}
+.quiz .prog i.done{background:#2A1F45}
+.qbtns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.qbtns button{min-height:54px;border-radius:16px;border:0;font-weight:900;font-size:17px;background:#2A1F45;color:#FFF}
+.qbtns button.no{background:#FFF;color:#2A1F45}
+.fb{background:#FFF;color:#2A1F45;border-radius:16px;padding:12px 14px;font-weight:700;font-size:15px}
+.fb b{font-weight:900}
+.next{min-height:50px;border-radius:16px;border:2px solid #2A1F45;background:transparent;color:#2A1F45;font-weight:900}
+
+/* leis */
+.laws{display:flex;flex-direction:column;gap:12px}
+.law{display:flex;gap:14px;align-items:stretch;background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:14px;overflow:hidden}
+.law .num{flex-shrink:0;width:84px;border-radius:16px;background:var(--c);color:var(--on);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 4px;line-height:1.05}
+.law .num small{font-size:11px;font-weight:800;opacity:.9;text-transform:uppercase;letter-spacing:.05em}
+.law .num b{font-size:19px;font-weight:900}
+.law .num em{font-style:normal;font-size:12px;font-weight:800;opacity:.9}
+.law .tx{display:flex;flex-direction:column;gap:3px;min-width:0}
+.law .tx b{font-weight:900;font-size:17px;line-height:1.2}
+.law .tx span{font-size:14.5px;color:var(--muted);font-weight:600;line-height:1.4}
+.note{font-size:13.5px;color:var(--muted);margin:0;font-weight:600}
+.callout{background:var(--surface2);border-radius:18px;padding:14px 16px;font-weight:700;font-size:15px}
+
+/* ajuda */
+.nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.nb{border:0;border-radius:22px;padding:16px;background:var(--c);color:var(--on);text-align:left;display:flex;flex-direction:column;gap:2px;min-height:118px}
+.nb b{font-size:38px;font-weight:900;line-height:1}
+.nb span{font-weight:800;font-size:14px;line-height:1.3}
+.nb small{margin-top:auto;font-weight:800;font-size:12px;opacity:.85}
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:12px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:12px 14px;font-weight:700}
+.step i{width:36px;height:36px;border-radius:12px;flex-shrink:0;display:grid;place-items:center;font-style:normal;font-weight:900;background:var(--c);color:var(--on)}
+
+/* plano */
+.plan{background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:14px;background:var(--surface2);font-weight:700;font-size:15px}
+.opt input{width:24px;height:24px;accent-color:var(--violet);flex-shrink:0}
+.btn{min-height:54px;border-radius:16px;border:0;background:var(--violet);color:var(--on);font-weight:900;font-size:16px}
+.src{display:flex;flex-direction:column;gap:6px;font-size:13.5px;font-weight:600}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:800;font-size:14px;z-index:40;max-width:calc(100% - 32px)}
+
+/* instrumentos */
+:root{--metal:#AEB6C4;--metal-d:#4E5668}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--metal:#C9D0DC;--metal-d:#8C95A8}}
+:root[data-theme="dark"]{--metal:#C9D0DC;--metal-d:#8C95A8}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.tools{grid-template-columns:1fr}}
+.tool{background:var(--surface);border:2px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.tool .pic{background:var(--surface2);padding:8px}
+.tool .pic svg{display:block;width:100%;height:auto}
+.tool .lb{font:800 11px var(--font);fill:var(--muted)}
+.tool .tt{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px}
+.tool .tt b{font-weight:900;font-size:18px}
+.tool .tt span{font-size:14.5px;font-weight:600;color:var(--muted);line-height:1.4}
+.tool .bad{margin:6px 0 0;font-size:14px;font-weight:700;line-height:1.4;background:color-mix(in srgb, var(--coral) 12%, transparent);border-radius:12px;padding:8px 10px}
+.tool .bad em{font-style:normal;font-weight:900;color:var(--coral)}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="blob b1" aria-hidden="true"></span><span class="blob b2" aria-hidden="true"></span><span class="blob b3" aria-hidden="true"></span>
+    <h1>Seu parto, seus direitos</h1>
+    <p>Violência obstétrica: aprenda a reconhecer e saiba como se proteger.</p>
+    <nav aria-label="Atalhos">
+      <a href="#sinais">Sinais</a><a href="#instrumentos">Instrumentos</a><a href="#teste">Teste</a><a href="#leis">Leis</a><a href="#ajuda">Ajuda</a>
+    </nav>
+  </header>
+
+  <section class="sec" style="--c:var(--violet)">
+    <span class="kicker"><i>?</i>O que é</span>
+    <div class="what">
+      <p>É todo desrespeito, maltrato ou abuso contra a mulher na gestação, no parto, no pós-parto ou no abortamento.</p>
+      <div class="chips"><span class="chip" style="--c:var(--coral)">Física</span><span class="chip" style="--c:var(--pink)">Verbal</span><span class="chip" style="--c:var(--violet)">Psicológica</span><span class="chip" style="--c:var(--teal)">Sem consentimento</span></div>
+      <p class="note">A Organização Mundial da Saúde reconhece como violação de direitos humanos.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="sinais" style="--c:var(--coral)">
+    <span class="kicker"><i>!</i>Sinal vermelho</span>
+    <h2>Isso é violência obstétrica</h2>
+    <p class="sub">Toque em cada cartão para entender.</p>
+    <div class="flips" id="flips"></div>
+  </section>
+
+
+  <section class="sec" id="instrumentos" style="--c:var(--teal)">
+    <span class="kicker"><i>◎</i>Reconheça</span>
+    <h2>Instrumentos e procedimentos</h2>
+    <p class="sub">Ilustrações para você reconhecer o que pode ser usado no parto. Alguns podem ser necessários. O problema é usar sem motivo ou sem o seu consentimento.</p>
+    <div class="tools">
+      <article class="tool"><div class="pic"><svg viewBox="0 0 240 140" role="img" aria-label="Ilustração de um fórceps">
+<ellipse cx="62" cy="70" rx="30" ry="24" fill="var(--pink)" opacity=".18"/>
+<path d="M128 66 C108 58 88 30 58 30 C34 30 22 44 30 56 C40 50 66 48 128 72" fill="none" stroke="var(--metal-d)" stroke-width="9" stroke-linejoin="round"/><path d="M128 66 C108 58 88 30 58 30 C34 30 22 44 30 56 C40 50 66 48 128 72" fill="none" stroke="var(--metal)" stroke-width="5" stroke-linejoin="round"/>
+<path d="M128 74 C108 82 88 110 58 110 C34 110 22 96 30 84 C40 90 66 92 128 68" fill="none" stroke="var(--metal-d)" stroke-width="9" stroke-linejoin="round"/><path d="M128 74 C108 82 88 110 58 110 C34 110 22 96 30 84 C40 90 66 92 128 68" fill="none" stroke="var(--metal)" stroke-width="5" stroke-linejoin="round"/>
+<rect x="122" y="60" width="18" height="20" rx="4" fill="var(--metal)" stroke="var(--metal-d)" stroke-width="2.5"/>
+<path d="M140 64 L212 58 M140 76 L212 82" stroke="var(--metal-d)" stroke-width="10" stroke-linecap="round"/><path d="M140 64 L212 58 M140 76 L212 82" stroke="var(--metal)" stroke-width="6" stroke-linecap="round"/>
+<path d="M150 58 l0 -10 M150 82 l0 10" stroke="var(--metal-d)" stroke-width="6" stroke-linecap="round"/>
+<text x="62" y="128" text-anchor="middle" class="lb">colheres</text><text x="131" y="40" text-anchor="middle" class="lb">trava</text><text x="190" y="104" text-anchor="middle" class="lb">cabos</text></svg></div><div class="tt"><b>Fórceps</b><span>Instrumento de metal com duas colheres que envolvem a cabeça do bebê para ajudar na saída.</span><p class="bad"><em>Vira violência quando:</em> Usado sem indicação, sem explicar os riscos, sem o seu consentimento ou sem anestesia.</p></div></article>
+      <article class="tool"><div class="pic"><svg viewBox="0 0 240 140" role="img" aria-label="Ilustração de um vácuo extrator">
+<path d="M28 82 Q28 40 62 40 Q96 40 96 82 Z" fill="var(--metal)" stroke="var(--metal-d)" stroke-width="3"/>
+<path d="M40 82 Q40 52 62 52" fill="none" stroke="#fff" stroke-width="3" opacity=".6"/>
+<path d="M62 82 L62 96 C62 116 120 118 150 100" fill="none" stroke="var(--metal-d)" stroke-width="7" stroke-linecap="round"/><path d="M62 82 L62 96 C62 116 120 118 150 100" fill="none" stroke="var(--teal)" stroke-width="4" stroke-linecap="round"/>
+<rect x="148" y="78" width="70" height="30" rx="15" fill="var(--teal)" stroke="var(--metal-d)" stroke-width="3"/>
+<circle cx="200" cy="93" r="7" fill="var(--metal)" stroke="var(--metal-d)" stroke-width="2"/>
+<text x="62" y="30" text-anchor="middle" class="lb">ventosa</text><text x="183" y="128" text-anchor="middle" class="lb">bomba de sucção</text></svg></div><div class="tt"><b>Vácuo extrator</b><span>Uma ventosa presa à cabeça do bebê que, com sucção, ajuda na saída. Tem o mesmo papel do fórceps.</span><p class="bad"><em>Vira violência quando:</em> Usado sem indicação, sem explicação ou sem o seu consentimento.</p></div></article>
+      <article class="tool"><div class="pic"><svg viewBox="0 0 240 140" role="img" aria-label="Ilustração de uma tesoura de episiotomia">
+<path d="M118 70 L36 52 L34 56 L112 74 Z" fill="var(--metal)" stroke="var(--metal-d)" stroke-width="3" stroke-linejoin="round"/>
+<path d="M118 70 L38 64 L38 68 L112 76 Z" fill="var(--metal)" stroke="var(--metal-d)" stroke-width="3" stroke-linejoin="round"/>
+<path d="M118 70 L176 46 M118 72 L176 96" stroke="var(--metal-d)" stroke-width="9" stroke-linecap="round"/><path d="M118 70 L176 46 M118 72 L176 96" stroke="var(--metal)" stroke-width="5" stroke-linecap="round"/>
+<circle cx="190" cy="40" r="15" fill="none" stroke="var(--metal-d)" stroke-width="9"/><circle cx="190" cy="40" r="15" fill="none" stroke="var(--metal)" stroke-width="5"/>
+<circle cx="190" cy="102" r="15" fill="none" stroke="var(--metal-d)" stroke-width="9"/><circle cx="190" cy="102" r="15" fill="none" stroke="var(--metal)" stroke-width="5"/>
+<circle cx="117" cy="71" r="5" fill="var(--metal-d)"/>
+<text x="70" y="96" text-anchor="middle" class="lb">lâminas</text></svg></div><div class="tt"><b>Tesoura de episiotomia</b><span>Tesoura usada para fazer o corte no períneo, entre a vagina e o ânus.</span><p class="bad"><em>Vira violência quando:</em> Corte feito de rotina, sem indicação, sem anestesia ou sem o seu sim.</p></div></article>
+      <article class="tool"><div class="pic"><svg viewBox="0 0 240 140" role="img" aria-label="Ilustração de um soro com ocitocina">
+<path d="M70 6 L70 14" stroke="var(--metal-d)" stroke-width="4" stroke-linecap="round"/>
+<rect x="38" y="14" width="64" height="70" rx="12" fill="var(--surface)" stroke="var(--metal-d)" stroke-width="3"/>
+<rect x="42" y="46" width="56" height="34" rx="8" fill="var(--pink)" opacity=".35"/>
+<rect x="42" y="24" width="56" height="16" rx="3" fill="var(--pink)"/><text x="70" y="35.5" text-anchor="middle" style="font:900 8.5px var(--font);fill:#fff">OCITOCINA</text>
+<path d="M70 84 L70 92" stroke="var(--metal-d)" stroke-width="4"/><rect x="62" y="92" width="16" height="20" rx="4" fill="var(--surface)" stroke="var(--metal-d)" stroke-width="2.5"/>
+<circle cx="70" cy="104" r="2.4" fill="var(--pink)"/>
+<path d="M70 112 C70 132 140 130 160 108 C172 94 196 96 208 106" fill="none" stroke="var(--metal-d)" stroke-width="3"/>
+<rect x="196" y="100" width="22" height="12" rx="3" fill="var(--metal)" stroke="var(--metal-d)" stroke-width="2"/>
+<text x="150" y="40" class="lb">bolsa de soro</text><text x="150" y="56" class="lb" style="opacity:.8">com o hormônio</text></svg></div><div class="tt"><b>Soro com ocitocina</b><span>Hormônio colocado no soro para deixar as contrações mais fortes e rápidas.</span><p class="bad"><em>Vira violência quando:</em> Usado de rotina, sem indicação ou sem você saber o que está recebendo.</p></div></article>
+      <article class="tool"><div class="pic"><svg viewBox="0 0 240 140" role="img" aria-label="Ilustração de um amniótomo">
+<rect x="70" y="62" width="150" height="14" rx="7" fill="var(--metal)" stroke="var(--metal-d)" stroke-width="3"/>
+<path d="M150 62 v14 M160 62 v14 M170 62 v14 M180 62 v14" stroke="var(--metal-d)" stroke-width="2"/>
+<path d="M70 69 L30 69 C22 69 20 62 26 58" fill="none" stroke="var(--metal-d)" stroke-width="6" stroke-linecap="round"/><path d="M70 69 L30 69 C22 69 20 62 26 58" fill="none" stroke="var(--metal)" stroke-width="3" stroke-linecap="round"/>
+<circle cx="32" cy="52" r="18" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-dasharray="4 4"/>
+<text x="14" y="104" class="lb">gancho na ponta</text></svg></div><div class="tt"><b>Amniótomo</b><span>Haste com um gancho na ponta, usada para romper a bolsa d’água.</span><p class="bad"><em>Vira violência quando:</em> Romper a bolsa de rotina, sem necessidade e sem explicar.</p></div></article>
+      <article class="tool"><div class="pic"><svg viewBox="0 0 240 140" role="img" aria-label="Ilustração da manobra de Kristeller: alguém empurrando a barriga da gestante">
+<rect x="10" y="112" width="220" height="10" rx="5" fill="var(--line)"/>
+<circle cx="206" cy="92" r="13" fill="var(--sun)" stroke="var(--metal-d)" stroke-width="2.5"/>
+<path d="M30 112 L30 100 C60 98 70 96 86 96 C90 62 150 56 166 92 C176 92 186 96 192 100 L192 112 Z" fill="var(--sun)" stroke="var(--metal-d)" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M152 10 L134 60" stroke="var(--coral)" stroke-width="18" stroke-linecap="round"/>
+<path d="M116 66 C120 56 148 56 152 64 C154 70 138 76 122 73 Z" fill="var(--coral)"/>
+<path d="M186 24 L176 54 M176 54 l-9 -6 M176 54 l8 -7" stroke="var(--coral)" stroke-width="4" stroke-linecap="round" fill="none"/>
+<path d="M98 20 L108 48 M108 48 l-9 -3 M108 48 l2 -9" stroke="var(--coral)" stroke-width="4" stroke-linecap="round" fill="none"/>
+<path d="M60 30 L80 46 M68 22 L88 38" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+</svg></div><div class="tt"><b>Manobra de Kristeller</b><span>Alguém aperta, empurra ou sobe na barriga para o bebê sair mais rápido.</span><p class="bad"><em>Vira violência quando:</em> Sempre. Essa manobra não deve ser feita.</p></div></article>
+    </div>
+  </section>
+  <section class="sec" style="--c:var(--pink)">
+    <span class="kicker"><i>×</i>Os perigos</span>
+    <h2>Por que isso machuca</h2>
+    <div class="dangers">
+      <div class="dg" style="--c:var(--coral)"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/><path d="M12 8l-1.5 4h3L12 16"/></svg></span><b>Dor e lesões</b><span>Cortes e lacerações que não precisavam acontecer.</span></div>
+      <div class="dg" style="--c:var(--violet)"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 16c1-1.3 2.2-2 3.5-2s2.5.7 3.5 2M9 9.5h.01M15 9.5h.01"/></svg></span><b>Trauma</b><span>Medo, ansiedade e depressão pós-parto.</span></div>
+      <div class="dg" style="--c:var(--teal)"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><b>Perder a voz</b><span>Você deixa de decidir sobre o próprio corpo.</span></div>
+      <div class="dg" style="--c:var(--pink)"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="11" r="2.4"/><path d="M4 20c.8-3 2.8-5 5-5s4.2 2 5 5M14 20c.4-1.8 1.4-3 2.6-3s2.2 1.2 2.6 3"/></svg></span><b>Vínculo afetado</b><span>Pode dificultar a amamentação e o encontro com o bebê.</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="teste" style="--c:var(--sun)">
+    <span class="kicker" style="--c:#B07A00"><i style="background:var(--sun);color:#2A1F45">✓</i>Teste rápido</span>
+    <h2>É violência ou não é?</h2>
+    <div class="quiz" aria-live="polite">
+      <div class="prog" id="qProg"></div>
+      <div class="q" id="qText"></div>
+      <div class="qbtns" id="qBtns"><button id="qYes">É violência</button><button class="no" id="qNo">Não é</button></div>
+      <div class="fb" id="qFb" hidden></div>
+      <button class="next" id="qNext" hidden>Próxima</button>
+    </div>
+  </section>
+
+  <section class="sec" id="leis" style="--c:var(--violet)">
+    <span class="kicker"><i>§</i>As leis</span>
+    <h2>Leis que protegem você</h2>
+    <div class="laws">
+      <div class="law" style="--c:var(--violet)"><div class="num"><small>Lei</small><b>11.108</b><em>2005</em></div><div class="tx"><b>Acompanhante no parto</b><span>Uma pessoa da sua escolha no trabalho de parto, no parto e no pós-parto, no SUS e no particular.</span></div></div>
+      <div class="law" style="--c:var(--pink)"><div class="num"><small>Lei</small><b>14.737</b><em>2023</em></div><div class="tx"><b>Acompanhante em tudo</b><span>Também em consultas, exames e procedimentos, sem precisar avisar antes.</span></div></div>
+      <div class="law" style="--c:var(--teal)"><div class="num"><small>Lei</small><b>11.634</b><em>2007</em></div><div class="tx"><b>Saber onde vai parir</b><span>No SUS, você conhece desde o pré-natal a maternidade onde terá o bebê.</span></div></div>
+      <div class="law" style="--c:var(--coral)"><div class="num"><small>Lei</small><b>14.721</b><em>2023</em></div><div class="tx"><b>Apoio psicológico</b><span>Atendimento psicológico pelo SUS na gestação, no parto e no pós-parto.</span></div></div>
+      <div class="law" style="--c:#B07A00"><div class="num" style="background:var(--sun);color:#2A1F45"><small>CFM</small><b>2.284</b><em>2020</em></div><div class="tx"><b>Informação e escolha</b><span>Resolução do Conselho Federal de Medicina: a gestante deve ser informada dos riscos e o médico não pode agir sem o consentimento dela.</span></div></div>
+    </div>
+    <div class="callout">Ainda não existe uma lei federal só sobre violência obstétrica. Mas a Justiça já condena casos com base nessas leis e no direito à informação.</div>
+  </section>
+
+  <section class="sec" id="ajuda" style="--c:var(--teal)">
+    <span class="kicker"><i>☎</i>Peça ajuda</span>
+    <h2>Aconteceu com você?</h2>
+    <div class="nums">
+      <button class="nb" style="--c:var(--violet)" data-copy="180"><b>180</b><span>Central de Atendimento à Mulher</span><small>Toque para copiar</small></button>
+      <button class="nb" style="--c:var(--teal)" data-copy="136"><b>136</b><span>Disque Saúde, Ouvidoria do SUS</span><small>Toque para copiar</small></button>
+      <button class="nb wide" style="--c:var(--coral)" data-copy="08007019656"><b style="font-size:28px">0800 701 9656</b><span>ANS, se você tem plano de saúde</span><small>Toque para copiar</small></button>
+    </div>
+    <div class="steps">
+      <div class="step" style="--c:var(--violet)"><i>1</i>Peça a cópia do seu prontuário. Ele é seu e é grátis.</div>
+      <div class="step" style="--c:var(--pink)"><i>2</i>Guarde provas: fotos, nomes, plano de parto, caderneta.</div>
+      <div class="step" style="--c:var(--teal)"><i>3</i>Denuncie na ouvidoria do hospital, no CRM ou no COREN.</div>
+      <div class="step" style="--c:var(--coral)"><i>4</i>Procure a Defensoria Pública ou um advogado.</div>
+    </div>
+  </section>
+
+  <section class="sec" style="--c:var(--violet)">
+    <span class="kicker"><i>♥</i>Seu escudo</span>
+    <h2>Mini plano de parto</h2>
+    <p class="sub">Marque, copie e leve para a maternidade.</p>
+    <div class="plan" id="plan"></div>
+    <button class="btn" id="planCopy">Copiar meu plano</button>
+  </section>
+
+  <section class="sec">
+    <p class="note">Conteúdo informativo. Não substitui orientação médica ou jurídica.</p>
+    <div class="src">
+      <b>Fontes</b>
+      <a href="https://portaltj.tjrj.jus.br/documents/d/guest/cartilha_violencia_obstetrica_" target="_blank" rel="noopener">TJRJ: cartilha sobre violência obstétrica</a>
+      <a href="https://congressoemfoco.com.br/noticia/19197/agora-e-lei-mulher-tera-direito-a-acompanhante-em-atendimento-medico-veja-a-integra" target="_blank" rel="noopener">Lei 14.737/2023</a>
+      <a href="https://www2.camara.leg.br/legin/fed/lei/2007/lei-11634-27-dezembro-2007-567635-norma-pl.html" target="_blank" rel="noopener">Lei 11.634/2007</a>
+      <a href="https://agenciagov.ebc.com.br/noticias/202311/presidente-sanciona-lei-que-garante-assistencia-psicologica-gratuita-a-mulheres-antes-e-depois-do-parto" target="_blank" rel="noopener">Lei 14.721/2023</a>
+      <a href="https://www2.oabrs.org.br/jornalDaOrdem/justica-reconhece-violencia-obstetrica-e-fixa-indenizacao/52605" target="_blank" rel="noopener">Justiça reconhece violência obstétrica em parto com fórceps sem informação (OAB-RS)</a>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} } };
+function toast(m){ const t=$("toast"); t.textContent=m; t.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>t.hidden=true,2200); }
+async function copy(text,msg){ try { await navigator.clipboard.writeText(text); toast(msg); } catch { toast("Não deu para copiar. Anote: "+text); } }
+
+const I = {
+  shout:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l6 4V6L7 10z"/><path d="M17 9l3-2M17 15l3 2M18 12h3"/></svg>',
+  people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2.5 20c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5M12 20c.8-3.2 1.7-5 4-5s4.7 1.8 5.5 5"/><path d="M3 3l18 18"/></svg>',
+  cut:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5L20 18M8.5 16.5L20 6"/></svg>',
+  push:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V5a1.5 1.5 0 0 1 3 0v5M10 9.5V4a1.5 1.5 0 0 1 3 0v6M13 9.5V5a1.5 1.5 0 0 1 3 0v6M16 10a1.5 1.5 0 0 1 3 0v4a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-3l-2.5-4a1.5 1.5 0 0 1 2.5-1.6L7 14"/></svg>',
+  tool:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3c-2 4-2 9 1 12l2 2M17 3c2 4 2 9-1 12l-2 2M10 17v4M14 17v4"/></svg>',
+  hand:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11M12 10V4.5a1.5 1.5 0 0 1 3 0V11M15 10.5V6a1.5 1.5 0 0 1 3 0v8a7 7 0 0 1-7 7 6 6 0 0 1-5.4-3.4L4 14a1.5 1.5 0 0 1 2.6-1.5L9 15"/><path d="M3 3l18 18"/></svg>',
+  drip:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8v7a4 4 0 0 1-8 0z"/><path d="M12 14v3M12 20v.5"/></svg>',
+  pain:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 16c1.2-1.4 2.5-2 4-2s2.8.6 4 2M8 9l2 1M16 9l-2 1"/></svg>',
+  baby:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="10" r="6"/><path d="M9.5 10h.01M14.5 10h.01M10 13c1 .8 3 .8 4 0"/><path d="M3 21L21 3"/></svg>',
+  knife:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c4-1 8-5 10-9l-3-3c-4 2-8 6-9 10z"/><path d="M14 11l6-6M17 4l3 3"/></svg>'
+};
+const SINAIS = [
+  ["var(--coral)", I.shout, "Gritos, ironias e humilhação", "Ninguém pode xingar, debochar ou criticar você por chorar, gritar, sentir dor ou pelo seu corpo."],
+  ["var(--violet)", I.people, "Proibir o acompanhante", "É lei: você escolhe quem fica com você no parto, e também em consultas e exames."],
+  ["var(--pink)", I.cut, "Episiotomia sem necessidade", "O corte no períneo não deve ser de rotina. Sem indicação, sem anestesia ou sem o seu sim, é violência."],
+  ["var(--teal)", I.push, "Empurrar a barriga", "A manobra de Kristeller, apertar ou subir na barriga para o bebê sair, não deve ser feita."],
+  ["var(--coral)", I.tool, "Fórceps sem explicar", "O fórceps pode ser necessário em alguns partos. Usar sem indicação, sem explicar os riscos, sem o seu consentimento ou sem anestesia é violência. A Justiça já condenou um caso assim por falta de informação.", 1],
+  ["var(--violet)", I.hand, "Toques repetidos", "Exames de toque por várias pessoas, sem necessidade ou para treinar estudantes sem a sua autorização."],
+  ["var(--pink)", I.drip, "Soro com ocitocina de rotina", "O hormônio que acelera o parto só deve ser usado com indicação, e você deve ser informada."],
+  ["var(--teal)", I.pain, "Negar alívio da dor", "Você pode pedir anestesia ou métodos para aliviar a dor. Negar sem motivo é violência."],
+  ["var(--coral)", I.knife, "Cesárea sem necessidade", "Convencer você de que precisa de cesárea, sem motivo real, tira a sua escolha."],
+  ["var(--violet)", I.baby, "Separar você do bebê", "Se vocês dois estão bem, têm direito ao contato pele a pele e à amamentação na primeira hora."]
+];
+$("flips").innerHTML = SINAIS.map(([c,ic,t,d,w],i)=>`<button class="flip${w?" wide":""}" style="--c:${c}" aria-pressed="false" aria-label="${t}. Toque para ver a explicação"><span class="in"><span class="face front">${ic}<b>${t}</b><small>Toque para ver</small></span><span class="face back"><b>${t}</b>${d}</span></span></button>`).join("");
+$("flips").addEventListener("click", e => { const f=e.target.closest(".flip"); if (f) f.setAttribute("aria-pressed", f.getAttribute("aria-pressed")==="true"?"false":"true"); });
+
+/* quiz */
+const Q = [
+  ["A equipe proíbe seu marido de ficar com você no parto porque “a sala está cheia”.", true, "Você tem direito a acompanhante de sua escolha no parto. É a Lei 11.108/2005."],
+  ["O médico explica por que precisa usar o fórceps, conta os riscos e pede a sua autorização.", false, "Quando há indicação, explicação e consentimento, o procedimento faz parte do cuidado."],
+  ["Uma pessoa sobe na sua barriga e empurra para o bebê nascer mais rápido.", true, "Isso é a manobra de Kristeller. Ela não deve ser feita."],
+  ["Você pede algo para aliviar a dor e escuta: “na hora de fazer não reclamou”.", true, "Comentário humilhante e negar alívio da dor são formas de violência."],
+  ["Logo após o parto, com você e o bebê bem, colocam o bebê no seu colo para mamar.", false, "Isso é um direito seu: contato pele a pele e amamentação na primeira hora."],
+  ["Fazem um corte no períneo sem avisar e sem anestesia.", true, "Episiotomia sem consentimento ou sem anestesia é violência obstétrica."]
+];
+let qi = 0, pts = 0;
+function drawQ(){
+  $("qProg").innerHTML = Q.map((_,i)=>`<i class="${i<qi?"done":""}"></i>`).join("");
+  $("qFb").hidden = true; $("qNext").hidden = true; $("qBtns").hidden = false;
+  if (qi >= Q.length){
+    $("qText").textContent = `Você acertou ${pts} de ${Q.length}!`;
+    $("qBtns").hidden = true; $("qFb").hidden = false;
+    $("qFb").innerHTML = pts===Q.length ? "<b>Perfeito.</b> Você sabe reconhecer seus direitos. Compartilhe com outras gestantes." : "<b>Muito bem.</b> Reveja os cartões de sinal vermelho e as leis acima.";
+    $("qNext").hidden = false; $("qNext").textContent = "Fazer de novo"; return;
+  }
+  $("qText").textContent = Q[qi][0];
+}
+function answer(v){
+  const [,ok,why] = Q[qi]; const right = v===ok; if (right) pts++;
+  $("qBtns").hidden = true; $("qFb").hidden = false;
+  $("qFb").innerHTML = `<b>${right?"Acertou!":"Não foi dessa vez."}</b> ${ok?"É violência.":"Não é violência."} ${why}`;
+  $("qNext").hidden = false; $("qNext").textContent = qi===Q.length-1 ? "Ver resultado" : "Próxima";
+}
+$("qYes").onclick = () => answer(true);
+$("qNo").onclick = () => answer(false);
+$("qNext").onclick = () => { if (qi >= Q.length){ qi=0; pts=0; } else qi++; drawQ(); };
+drawQ();
+
+/* plano */
+const OPS = ["Quero meu acompanhante o tempo todo.","Quero ser informada e dar meu consentimento antes de qualquer procedimento.","Não autorizo episiotomia sem necessidade e sem anestesia.","Não autorizo a manobra de Kristeller.","Fórceps só com indicação, explicação dos riscos e meu consentimento.","Quero alívio da dor se eu pedir.","Quero escolher a posição para parir.","Quero contato pele a pele e amamentar na primeira hora."];
+let sel = {}; try { sel = JSON.parse(store.get("vo-plano")||"{}"); } catch {}
+$("plan").innerHTML = OPS.map((o,i)=>`<label class="opt" for="op${i}"><input type="checkbox" id="op${i}" data-i="${i}"${sel[i]?" checked":""}>${o}</label>`).join("");
+$("plan").addEventListener("change", e => { const i=e.target.dataset.i; if (i==null) return; if (e.target.checked) sel[i]=1; else delete sel[i]; store.set("vo-plano", JSON.stringify(sel)); });
+$("planCopy").onclick = () => {
+  const ch = OPS.filter((_,i)=>sel[i]);
+  if (!ch.length){ toast("Marque ao menos uma opção"); return; }
+  copy("MEU PLANO DE PARTO\n\n" + ch.map(o=>"- "+o).join("\n") + "\n\nDireito a acompanhante: Lei 11.108/2005 e Lei 14.737/2023.", "Plano copiado");
+};
+document.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => copy(b.dataset.copy, `Número ${b.dataset.copy} copiado`));
+})();
+</script>
+
+</body>
+</html>
